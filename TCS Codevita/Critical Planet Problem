@@ -1,0 +1,38 @@
+timer=0
+def dfs (cur, par, timer):
+    vis[cur]=1
+    if cur!=0:
+      low[cur] = trav[cur] = trav[par] + 1
+    timer += 1
+    for i in g[cur]:
+        if i == par:
+            continue
+        if vis[i]==1:
+            low[cur] = min ( low[cur], trav[i] )
+        else:
+            dfs(i, cur, timer)
+            if low[i]>low[cur]:
+                defend.add(i)
+                defend.add(cur)
+            low[cur] = min (low[cur], low[i])
+e, n = map(int, input().split())
+g = []
+vis = []
+low = []
+trav = []
+for i in range(n):
+  l = []
+  vis.append(0)
+  low.append(0)
+  trav.append(0)
+  g.append(l)
+for i in range(e):
+  a, b = map(int, input().split())
+  g[a].append(b)
+  g[b].append(a)
+defend = set()
+dfs(0, -1, timer)
+defend = list(defend)
+defend.sort()
+for i in defend:
+  print(i)
