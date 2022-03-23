@@ -1,0 +1,71 @@
+def operation(n):
+    if n == 0:
+        return False
+    else:
+        return True
+
+def findqualities(mat, p1, p2, row, col):
+    count = 0
+    try:
+        if p2+1 <=col and mat[p1][p2+1] == 1:
+            count += 1
+    except:
+        pass
+    try:
+        if p2-1 >=0 and mat[p1][p2-1] == 1:
+            count += 1
+    except:
+        pass
+    try:
+        if p1-1>=0 and mat[p1-1][p2] == 1:
+            count += 1
+    except:
+        pass
+    try:
+        if p1+1 <=row and mat[p1+1][p2] == 1:
+            count += 1
+    except:
+        pass
+    try:
+        if mat[p1 - 1][p2 + 1] == 1:
+            count += 1
+    except:
+        pass
+    try:
+        if mat[p1 + 1][p2 - 1] == 1:
+            count += 1
+    except:
+        pass
+    try:
+        if mat[p1 + 1][p2 + 1] == 1:
+            count += 1
+    except:
+        pass
+    try:
+        if mat[p1 - 1][p2 - 1] == 1:
+            count += 1
+    except:
+        pass
+    return count
+
+
+row, col = map(int, input().split())
+input_mat = [ list(int(a) for a in input().split()) for _ in range(row)]
+a = []
+input_mat[0][0]=0
+for pos1, lis in enumerate(input_mat,0):
+    for pos2, ele in enumerate(lis,0):
+        if operation(ele):
+            y = findqualities(input_mat, pos1, pos2, row, col)
+            a.append([pos1,pos2,y])
+max = a[0][2]
+max_pos = a[0][1], a[0][2]
+for pos1, ele in enumerate(a):
+    if ele[2] > max:
+        max = ele[2]
+        max_pos = [[ele[0], ele[1]], ]
+for pos1, ele in enumerate(a):
+    if ele[2] == max:
+        max_pos.append([ele[0], ele[1]])
+del(max_pos[0])
+print(str(max_pos[0][0]+1) + ":" + str(max_pos[0][1]+1) + ":" + str(max-1))
